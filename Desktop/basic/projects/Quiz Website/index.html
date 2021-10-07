@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width , initial-scale = 1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <title>
+        Check IMEI valid or not
+    </title>
+</head>
+
+<body>
+
+    <div class="main-div">
+
+
+
+
+        <div class="inner-div">
+
+
+            <form id="myForm">
+
+                <label for="lname">Imei Number:</label>
+                <input type="text" id="lname" name="lname"><br><br>
+                <div id="output">
+                      
+                </div>
+                <br>
+                <button type="submit" id="submit"> SUBMIT </button>
+            </form>
+
+
+            <script>
+               const outputEle = document.getElementById("output");
+                const getAns = async (e) => {
+                    e.preventDefault();
+                    let number = document.getElementById("lname").value;
+                    let response = await fetch('http://localhost:8080/imei', {
+
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+
+                        body: JSON.stringify({
+                            imeinumber: number
+                        })
+
+                    })
+
+                    let data = await response.text();
+                    outputEle.textContent = data;
+                    console.log(data);
+                    
+                    
+                }
+
+
+                const MyForm = document.getElementById("myForm");
+                MyForm.addEventListener("submit", (e) => {
+                    getAns(e);
+                }
+                );
+
+
+
+            </script>
+
+
+        </div>
+    </div>
+
+</body>
+
+
+
+</html>
